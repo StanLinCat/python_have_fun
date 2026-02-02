@@ -39,8 +39,8 @@ Fan_power_heat = 40.0   # 40W 風扇廢熱 (Case 2 only)
 # 熱阻參數 (關鍵調校點)
 # 為了讓客廳在強制對流下平衡在 23~24度，我們反推熱阻
 # 平衡公式: (32 - 24) / R = U_forced * (24 - 16)
-R_wall1 = 0.015         # 臥室隔熱稍好
-R_wall2 = 0.010         # 客廳落地窗多，熱散失快 (數值越小，散熱越快，維持低溫越難)
+R_wall1 = 0.020         # 臥室隔熱稍好
+R_wall2 = 0.011         # 客廳落地窗多，熱散失快 (數值越小，散熱越快，維持低溫越難)
 
 # ==========================================
 # 2. 對流參數 (Coupling Factors)
@@ -53,7 +53,7 @@ U_natural = 35.0        # W/K
 # Case 2: 強制對流 (導風管 + 抽風機)
 # 假設風量與之前類似，但為了配合您的 "23-24度" 觀察，這裡不需要調整
 # 物理計算: 300 CMH 風量 => U approx 100 W/K
-flow_rate_cmh = 350.0   # 稍微提高風量假設
+flow_rate_cmh = 200.0   # 稍微提高風量假設
 m_dot = (flow_rate_cmh / 3600.0) * rho_air
 U_forced = m_dot * cp_air 
 
@@ -130,7 +130,7 @@ def run_simulation(case_type, add_noise=False):
 T1_c1, T2_c1 = run_simulation(case_type=1, add_noise=True) # 自然
 T1_c2, T2_c2 = run_simulation(case_type=2, add_noise=True) # 強制
 
-plt.figure(figsize=(12, 7), dpi=100)
+plt.figure(figsize=(10, 6), dpi=100)
 
 # 繪製目標區域 (Target Zone)
 plt.axhspan(23, 24, color='green', alpha=0.1, label='Target Comfort Zone (23-24°C)')
@@ -157,7 +157,7 @@ plt.xlabel('Time (minutes)', fontsize=12)
 plt.ylabel('Living Room Temperature (°C)', fontsize=12)
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.legend(loc='upper right')
-plt.ylim(15, 33)
+plt.ylim(20, 30)
 plt.tight_layout()
 
 plt.show()
